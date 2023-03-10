@@ -18,13 +18,14 @@
 package spec
 
 import (
-	"github.com/streamnative/function-mesh/api/compute/v1alpha1"
-	"github.com/streamnative/function-mesh/utils"
 	"google.golang.org/protobuf/encoding/protojson"
 	appsv1 "k8s.io/api/apps/v1"
 	autov2beta2 "k8s.io/api/autoscaling/v2beta2"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
+	"github.com/streamnative/function-mesh/api/compute/v1alpha1"
+	"github.com/streamnative/function-mesh/utils"
 )
 
 func MakeSourceHPA(source *v1alpha1.Source) *autov2beta2.HorizontalPodAutoscaler {
@@ -53,7 +54,7 @@ func MakeSourceStatefulSet(source *v1alpha1.Source) *appsv1.StatefulSet {
 	objectMeta := MakeSourceObjectMeta(source)
 	return MakeStatefulSet(objectMeta, source.Spec.Replicas, source.Spec.DownloaderImage, MakeSourceContainer(source),
 		makeSourceVolumes(source), makeSourceLabels(source), source.Spec.Pod, *source.Spec.Pulsar,
-		source.Spec.Java, source.Spec.Python, source.Spec.Golang, source.Spec.VolumeMounts)
+		source.Spec.Java, source.Spec.Python, source.Spec.Golang, source.Spec.VolumeMounts, nil)
 }
 
 func MakeSourceObjectMeta(source *v1alpha1.Source) *metav1.ObjectMeta {

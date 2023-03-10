@@ -18,13 +18,14 @@
 package spec
 
 import (
-	"github.com/streamnative/function-mesh/api/compute/v1alpha1"
-	"github.com/streamnative/function-mesh/utils"
 	"google.golang.org/protobuf/encoding/protojson"
 	appsv1 "k8s.io/api/apps/v1"
 	autov2beta2 "k8s.io/api/autoscaling/v2beta2"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
+	"github.com/streamnative/function-mesh/api/compute/v1alpha1"
+	"github.com/streamnative/function-mesh/utils"
 )
 
 func MakeSinkHPA(sink *v1alpha1.Sink) *autov2beta2.HorizontalPodAutoscaler {
@@ -53,7 +54,7 @@ func MakeSinkStatefulSet(sink *v1alpha1.Sink) *appsv1.StatefulSet {
 	objectMeta := MakeSinkObjectMeta(sink)
 	return MakeStatefulSet(objectMeta, sink.Spec.Replicas, sink.Spec.DownloaderImage, MakeSinkContainer(sink),
 		makeSinkVolumes(sink), MakeSinkLabels(sink), sink.Spec.Pod, *sink.Spec.Pulsar,
-		sink.Spec.Java, sink.Spec.Python, sink.Spec.Golang, sink.Spec.VolumeMounts)
+		sink.Spec.Java, sink.Spec.Python, sink.Spec.Golang, sink.Spec.VolumeMounts, nil)
 }
 
 func MakeSinkServiceName(sink *v1alpha1.Sink) string {
